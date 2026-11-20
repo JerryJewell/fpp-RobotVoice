@@ -20,8 +20,10 @@
   "dependencies": {
     "packages": [
       "python3-numpy",
-      "python3-sounddevice",
       "libportaudio2"
+    ],
+    "python": [
+      "sounddevice==0.5.3"
     ]
   },
   "privacy": {
@@ -42,7 +44,7 @@
       },
       {
         "kind": "download",
-        "what": "Installs NumPy, sounddevice and PortAudio from the operating system package repositories."
+        "what": "Installs NumPy and PortAudio from OS repositories and sounddevice 0.5.3 from PyPI through FPP."
       }
     ],
     "closedCode": false,
