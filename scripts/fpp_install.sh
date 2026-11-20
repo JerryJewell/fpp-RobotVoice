@@ -11,7 +11,8 @@ if [ ! -f "${PLUGIN_DIR}/robot_voice.py" ]; then
   exit 1
 fi
 # Use OS packages; no pip, external script download, or FPP core modifications.
-DEBIAN_FRONTEND=noninteractive apt-get install -y python3-numpy python3-sounddevice libportaudio2
+DEBIAN_FRONTEND=noninteractive apt-get install -y python3-numpy libportaudio2
+python3 -c 'import numpy, sounddevice'
 install -d -m 0750 -o fpp -g fpp "${DATA_DIR}"
 if [ ! -f "${DATA_DIR}/config.json" ]; then
   install -m 0640 -o fpp -g fpp "${PLUGIN_DIR}/default-config.json" "${DATA_DIR}/config.json"
