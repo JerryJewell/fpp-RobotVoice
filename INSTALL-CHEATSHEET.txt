@@ -1,0 +1,3 @@
+Install from FPP Plugins: see README.md.
+Repository: https://github.com/JerryJewell/fpp-RobotVoice
+Hardware testing pending.

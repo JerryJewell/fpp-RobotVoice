@@ -1,0 +1,16 @@
+{
+  "enabled": false,
+  "input_device": "",
+  "output_device": "",
+  "sample_rate": 48000,
+  "blocksize": 256,
+  "preset": "clean",
+  "mic_gain": 1.0,
+  "output_gain": 0.30,
+  "noise_gate": 0.02,
+  "pitch_ratio": 1.0,
+  "metallic": 0.0,
+  "metallic_hz": 65.0,
+  "distortion": 0.0,
+  "echo_ms": 0
+}

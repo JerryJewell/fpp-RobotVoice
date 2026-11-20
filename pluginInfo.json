@@ -1,0 +1,51 @@
+{
+  "repoName": "fpp-RobotVoice",
+  "name": "Robot Voice",
+  "author": "Jerry Jewell (JerryJewell)",
+  "description": "Live microphone-to-amplifier robotic voice effects for a dedicated Raspberry Pi. Clean, Classic Robot, Deep Robot and Dalek-style presets. Experimental: Pi/FPP hardware testing pending.",
+  "homeURL": "https://github.com/JerryJewell/fpp-RobotVoice",
+  "srcURL": "https://github.com/JerryJewell/fpp-RobotVoice.git",
+  "bugURL": "https://github.com/JerryJewell/fpp-RobotVoice/issues",
+  "documentation": "https://github.com/JerryJewell/fpp-RobotVoice#readme",
+  "allowUpdates": 1,
+  "releaseNotesStyle": "gitHistory",
+  "versions": [
+    {
+      "minFPPVersion": "10.0",
+      "maxFPPVersion": "10.99",
+      "branch": "main",
+      "sha": ""
+    }
+  ],
+  "dependencies": {
+    "packages": [
+      "python3-numpy",
+      "python3-sounddevice",
+      "libportaudio2"
+    ]
+  },
+  "privacy": {
+    "summary": "Processes live microphone audio on this player and outputs it to your amplifier. Audio is not recorded or sent online.",
+    "sends": [],
+    "collects": [],
+    "sensors": [
+      {
+        "type": "microphone",
+        "stored": false
+      }
+    ],
+    "remoteAccess": "none",
+    "systemChanges": [
+      {
+        "kind": "service",
+        "what": "Installs and enables fpp-robotvoice.service to run the audio engine as the fpp user at boot."
+      },
+      {
+        "kind": "download",
+        "what": "Installs NumPy, sounddevice and PortAudio from the operating system package repositories."
+      }
+    ],
+    "closedCode": false,
+    "other": "Stores device names, effect settings, audio-device status and diagnostic logs under FPP media. Web controls use FPP's existing web server. No audio files are stored."
+  }
+}
