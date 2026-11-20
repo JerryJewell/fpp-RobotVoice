@@ -104,9 +104,9 @@ $devices = isset($status['devices']) && is_array($status['devices']) ? $status['
   'output_gain'=>array('Output level (start at 0.30)',0,1,.05),
   'noise_gate'=>array('Noise gate threshold',0,.10,.005),
   'pitch_ratio'=>array('Pitch ratio: below 1 is lower',.60,1.30,.01),
-  'metallic'=>array('Metallic modulation',0,1,.05),
+  'metallic'=>array('Metallic modulation',0,1,.01),
   'metallic_hz'=>array('Metallic frequency (Hz)',20,180,1),
-  'distortion'=>array('Distortion',0,1,.05),
+  'distortion'=>array('Distortion',0,1,.01),
   'echo_ms'=>array('Echo milliseconds',0,200,1)
   ) as $field=>$desc): ?>
    <div class="col-sm-6 col-md-4"><div class="form-group"><label for="<?=rv_escape($field)?>"><?=rv_escape($desc[0])?></label>
