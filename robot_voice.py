@@ -204,6 +204,20 @@ def configure_logging() -> None:
                         handlers=[handler])
 
 
+def live_enabled(config_enabled: bool, path: Path, boot_id: str) -> bool:
+    """A Status-page override lasts until reboot and never rewrites boot settings."""
+    if not boot_id:
+        return config_enabled
+    try:
+        command = json.loads(path.read_text(encoding="utf-8"))
+        if (isinstance(command, dict) and command.get("boot") == boot_id
+                and isinstance(command.get("on"), bool)):
+            return command["on"]
+    except (OSError, ValueError):
+        pass
+    return config_enabled
+
+
 def run_forever(config_path: Path) -> None:
     import sounddevice as sd  # only needed on an installed Pi
     running = True
@@ -225,6 +239,12 @@ def run_forever(config_path: Path) -> None:
     xruns = [0]
     dsp_errors = [0]
     last_status = 0.0
+    last_report = None
+    try:
+        boot_id = Path("/proc/sys/kernel/random/boot_id").read_text().strip()
+    except OSError:
+        boot_id = ""
+    live_path = DATADIR / "live.json"
     last_attempt = 0.0
     last_devices_scan = 0.0
     devices: list[dict[str, Any]] = []
@@ -239,9 +259,10 @@ def run_forever(config_path: Path) -> None:
                     logging.warning("Device discovery: %s", exc)
                 last_devices_scan = now
             cfg = load_config(config_path)
+            enabled = live_enabled(cfg["enabled"], live_path, boot_id)
             desired_key = (cfg["input_device"], cfg["output_device"],
-                           cfg["sample_rate"], cfg["blocksize"]) if cfg["enabled"] else None
-            if desired_key != audio_key or (cfg["enabled"] and stream is None and now - last_attempt >= 10):
+                           cfg["sample_rate"], cfg["blocksize"]) if enabled else None
+            if desired_key != audio_key or (enabled and stream is None and now - last_attempt >= 10):
                 last_attempt = now
                 if stream is not None:
                     stream.stop()
@@ -301,7 +322,8 @@ def run_forever(config_path: Path) -> None:
                     stream.close()
                     stream = None
                     logging.warning(last_error)
-            if now - last_status > 10 or desired_key != audio_key:
+            report = (enabled, status_text, last_error)
+            if now - last_status > 10 or report != last_report:
                 atomic_json(DATADIR / "status.json", {
                     "time": int(time.time()), "version": VERSION,
                     "state": status_text, "error": last_error,
@@ -309,7 +331,8 @@ def run_forever(config_path: Path) -> None:
                     "devices": devices,
                 })
                 last_status = now
-            time.sleep(1.0 if stream is not None or not cfg["enabled"] else 3.0)
+                last_report = report
+            time.sleep(0.3)
     finally:
         if stream is not None:
             stream.stop()

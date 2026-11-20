@@ -1,8 +1,8 @@
 {
   "repoName": "fpp-RobotVoice",
-  "name": "Robot Voice",
+  "name": "Chad's Voice Changer",
   "author": "Jerry Jewell (JerryJewell)",
-  "description": "Live microphone-to-amplifier robotic voice effects for a dedicated Raspberry Pi. Clean, Classic Robot, Deep Robot and Dalek-style presets. Experimental: Pi/FPP hardware testing pending.",
+  "description": "Play FPP sequence audio and a live, voice-changed mic at the same time. Both can share one audio output on compatible setups. Includes clean, robot, and experimental cartoon presets and a Status-page mic switch.",
   "homeURL": "https://github.com/JerryJewell/fpp-RobotVoice",
   "srcURL": "https://github.com/JerryJewell/fpp-RobotVoice.git",
   "bugURL": "https://github.com/JerryJewell/fpp-RobotVoice/issues",
