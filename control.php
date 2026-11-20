@@ -16,6 +16,8 @@ $profiles = array(
  'clean'=>array('pitch_ratio'=>1.00,'metallic'=>0.00,'metallic_hz'=>65,'distortion'=>0.00,'echo_ms'=>0),
  'classic'=>array('pitch_ratio'=>0.95,'metallic'=>0.52,'metallic_hz'=>68,'distortion'=>0.13,'echo_ms'=>0),
  'deep'=>array('pitch_ratio'=>0.72,'metallic'=>0.20,'metallic_hz'=>45,'distortion'=>0.23,'echo_ms'=>0),
+ 'cartoon'=>array('pitch_ratio'=>1.50,'metallic'=>0.00,'metallic_hz'=>65,'distortion'=>0.00,'echo_ms'=>0),
+ 'chipmunk'=>array('pitch_ratio'=>1.85,'metallic'=>0.00,'metallic_hz'=>65,'distortion'=>0.00,'echo_ms'=>0),
  'dalek'=>array('pitch_ratio'=>0.88,'metallic'=>0.76,'metallic_hz'=>89,'distortion'=>0.35,'echo_ms'=>58)
 );
 function rv_escape($value) {
@@ -47,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  $new['blocksize'] = ($_POST['blocksize'] ?? '') == '512' ? 512 : 256;
  foreach (array(
    'mic_gain'=>array(0,4), 'output_gain'=>array(0,1),
-   'noise_gate'=>array(0,.10), 'pitch_ratio'=>array(.60,1.30),
+   'noise_gate'=>array(0,.10), 'pitch_ratio'=>array(.60,2.00),
    'metallic'=>array(0,1), 'metallic_hz'=>array(20,180),
    'distortion'=>array(0,1), 'echo_ms'=>array(0,200)
  ) as $key=>$bounds) {
@@ -90,7 +92,7 @@ $devices = isset($status['devices']) && is_array($status['devices']) ? $status['
   </div>
   <div class="form-group"><label for="preset">Voice preset</label>
     <select class="form-control" id="preset" name="preset">
-    <?php foreach (array('clean'=>'Clean / test', 'classic'=>'Classic robot', 'deep'=>'Deep robot', 'dalek'=>'Dalek-style') as $key=>$label): ?>
+    <?php foreach (array('clean'=>'Clean / test', 'classic'=>'Classic robot', 'deep'=>'Deep robot', 'dalek'=>'Dalek-style', 'cartoon'=>'Squeaky cartoon (experimental)', 'chipmunk'=>'Chipmunk (experimental)') as $key=>$label): ?>
     <option value="<?= rv_escape($key) ?>" <?= $config['preset']===$key?'selected':'' ?>><?= rv_escape($label) ?></option><?php endforeach; ?>
     </select><small>Select a preset and click <b>Load preset values</b>, or edit the parameters manually below.</small>
   </div>
@@ -103,7 +105,7 @@ $devices = isset($status['devices']) && is_array($status['devices']) ? $status['
   'mic_gain'=>array('Microphone gain',0,4,.05),
   'output_gain'=>array('Output level (start at 0.30)',0,1,.05),
   'noise_gate'=>array('Noise gate threshold',0,.10,.005),
-  'pitch_ratio'=>array('Pitch ratio: below 1 is lower',.60,1.30,.01),
+  'pitch_ratio'=>array('Pitch ratio: below 1 lower, above 1 higher',.60,2.00,.01),
   'metallic'=>array('Metallic modulation',0,1,.01),
   'metallic_hz'=>array('Metallic frequency (Hz)',20,180,1),
   'distortion'=>array('Distortion',0,1,.01),

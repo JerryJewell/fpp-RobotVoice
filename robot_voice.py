@@ -36,6 +36,8 @@ PRESETS = {
     "classic": {"pitch_ratio": 0.95, "metallic": 0.52, "metallic_hz": 68, "distortion": 0.13, "echo_ms": 0},
     "deep":    {"pitch_ratio": 0.72, "metallic": 0.20, "metallic_hz": 45, "distortion": 0.23, "echo_ms": 0},
     "dalek":   {"pitch_ratio": 0.88, "metallic": 0.76, "metallic_hz": 89, "distortion": 0.35, "echo_ms": 58},
+    "cartoon": {"pitch_ratio": 1.50, "metallic": 0.00, "metallic_hz": 65, "distortion": 0.00, "echo_ms": 0},
+    "chipmunk": {"pitch_ratio": 1.85, "metallic": 0.00, "metallic_hz": 65, "distortion": 0.00, "echo_ms": 0},
 }
 
 
@@ -59,7 +61,7 @@ def normalize(raw: Any) -> dict[str, Any]:
     c["blocksize"] = 512 if str(value.get("blocksize", 256)) == "512" else 256
     for key, lo, hi in (
         ("mic_gain", 0, 4), ("output_gain", 0, 1), ("noise_gate", 0, .10),
-        ("pitch_ratio", .60, 1.30), ("metallic", 0, 1),
+        ("pitch_ratio", .60, 2.00), ("metallic", 0, 1),
         ("metallic_hz", 20, 180), ("distortion", 0, 1),
         ("echo_ms", 0, 200),
     ):
